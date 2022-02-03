@@ -1,0 +1,331 @@
+// Codes - start with `, anything else is text
+// Lx - start point for level x
+// B - fade to black
+// Cxyy - perform challenge stage x with criteria yy
+// Sxyz - play normal level x, out of y rounds, on stage z, for sheep (z is optional)
+// Pxyz - play normal level x, out of y rounds, on stage z, for points (z is optional)
+// Pxyz+ - same as Pxyz, but adds Iskur's clones
+// E - end of level
+// Q - end game
+// ` - end of data
+// All text starts with four digits that indicate the slide to be displayed, ignore whitespace
+// after the digits.
+// Text starting with a '+' will autoadvance, as will frames with no text
+
+L1
+0001	In New Zealand...
+0002	...before it was new...
+0003	...it was a typical\nday...
+0004	...for most of it.
+0005	But,
+0006	things would become far\nless typical,
+0007	for one boy in\nparticular.
+B
+0008	
+0009	
+B
+0010	"Dear Zeus: I've taken most of the\nsheep from your pathetic little village."
+0010	"If you want them returned, seek them out\nand take them back yourself."
+0010	"Your nemesis,\nIskur"
+0011	Iskur?\nWhat could he want?
+0012	He's trying to throw me\noff my game!
+0013	I'll practice harder!\nThat'll show him!
+0014	...
+S111
+S112
+E
+L2
+0015	Do you really think Iskur\nwas serious, Chrys?
+0015	Could he sheepnap a whole\nherd?
+0016	+!!!
+0017	What?
+0017	You think so?
+0018	I guess you have a point\nthere.
+0018	No harm in checking it\nout, right?
+B
+0019	
+0020	
+B
+0021	Holy Doodle!
+0021	These tracks go on\nforever!
+0022	Well, almost forever...
+0023	They just lead up to the\nbanks of this pink river.
+0024	Wait a minute...
+0024	...pink river?
+0024	That means we've made it\nto...
+0025	The Candy Shoppe!
+0026	Maybe they know something\nabout the sheepnapping.
+0027	Uh...\nWhat's that?
+0028	+-burble-
+0028	+-BLORP-
+0029	+-beh-
+0029	+Oh my!
+0030	+-beh!-
+0031	+-beh-
+0032	+-BEH!-
+0033	Yecch!\nCandy-coated sheep!
+0033	The candy stripers won't\nbe happy about this.
+0034	Oh no.
+0034	They REALLY don't look\nhappy.
+0035	+eep!
+0036	+ack!
+0037	+My arm!!
+0038	Wait! WAIT!!
+0038	I can explain!
+C225
+P23
+E
+L3
+0039	... and that's how it is.\nYou believe me, right?
+0040	Absolutely!
+0040	No one as good as you at herding would\never leave so many sheep behind.
+0041	There was a guy hanging\naround last night.
+0041	A big guy, though...\n...with a sheep for a head.
+0042	Big guy...
+0043	..with a sheep for a\nhead?
+0043	That's not something\nIskur would do.
+0045	He was heading towards\nold man Hades' place.
+0046	O-Old Man Hades?!
+0046	That guy's name is\nsynonymous with death!
+0047	I guess we don't have\nmuch choice, Chrys.
+0047	On to our doom!
+B
+0048	
+0049	
+B
+0050	Boy, it sure got dark\nquick!
+0050	But no need to worry...
+0051	...right, Chrys?
+0052	...Chrys?
+0053	CHRYSOMALLOS!!
+0053	WAIT UP!!
+0054	I'm right behind you,\nbuddy!
+0055	-huff-\n... I ... finally ...
+0055	-gasp-\n... caught up ... with...
+0056	EEP!
+0057	Old Man Hades' place!
+0058	Aww, man...
+0058	I'm too pretty to die!
+C325
+S33
+E
+L4
+0059	Are they still calling me\n"Death"?
+0059	That's so sad.
+0060	You see, I used to be a\nsheep addict.
+0060	I ate a lot of mutton. A lot.
+0061	And now, I'm haunted by\nthe ghosts of the sheep I ate.
+0062	But that's not why you're\nhere, is it?
+0062	No relief for a bad old wolf.
+0063	Down in the city is a Disco.
+0063	It's run by Trey Volta,\nthe self-proclaimed God of Dance.
+0064	The only problem is, he\ndoesn't like herders.
+0064	So.. you're going to have\nto sneak in.
+0065	... Sneak in?
+0066	...
+B
+0067	
+0068	
+B
+0069	Cool!\nYou can see the whole city from here!
+0069	-WAIT!-
+0069	Wha-?
+0070	WAIT!
+0070	ZEUS!!
+B
+0071	
+0072	
+0073	
+B
+0074	Thalia!
+0074	What's up?
+0075	Sheep, Zeus!
+0075	Sheep EVERYWHERE!
+0076	They're all over my\nbeautiful factory!
+0076	My robots weren't designed to\nhandle that much woolly doom!
+0077	But you're a herder...
+0077	... you can handle this,\ncan't you?
+0078	uh...
+0079	+-shake-
+0080	...sure?
+0081	Oh, thank you!
+0081	I'll bet you're better\nthan ever!
+C414
+P43
+E
+L5
+0083	You've got some crazy\ntalent there, Zeus!
+0083	Simply amazing.
+0083	Thank you!
+0084	+-KISS-
+0085	+* * *
+0086	Zeus?
+0087	Are you OK?
+0087	You look a little\nflushed...
+0088	No no no!
+0088	I'm Fine!\nI'm GREAT!
+0088	Good good good good good!
+0089	We do have to get going,\nthough.
+0089	There's a sheepnapper on\nthe loose.
+B
+0090	
+0091	
+B
+0092	...
+0092	Haven't we been this way\nalready?
+0092	Well, while we're here...
+0092	...we may as well try on the\ndisguises Thalia gave us.
+0093	OOH!\nThese are PERFECT!
+0093	No one will ever\nrecognise us!
+0094	+-POM-
+0095	Ok, Chrys.
+0095	Let's dance!
+0096	
+0097	+-gasp-
+0098	+-step-step-
+0099	+What the...?
+0100	+-patter-patter-
+0102	Are you ready, Chrys?
+0103	Dudes!
+0103	Cool 'fros!
+0104	Too bad one of my friends\nturned out to be a herder.
+0104	There are sheep all over\nthe place!
+0105	I had to close the Disco,\ndudes.
+0105	We have to clean up the\nmess.
+0106	Closed!?
+0106	Can we help?
+0107	Dude, if your moves are\nanywhere near as cool as your looks...
+0108	...we're saved!!
+C510
+S53
+E
+L6
+0109	Oh...
+0109	Oh no.
+0110	AAAAAAH!
+0110	You're a HERDER?!
+0111	Such grace...\n...such syle...
+0111	...there's just no way!
+0112	Is THAT why you hate\nherders?
+0113	Of course!
+0113	The God of Dance can't afford\nto be associated with such ruffians!
+0114	What about Iskur, then?
+0115	Wha-?\nIskur...?
+0116	...guy with a sheep for a\nhead?
+0117	Oh! That guy!
+0118	His head really was a\nsheep, huh?
+0118	I thought he was trying\nto be avante-garde.
+0119	Avante-garde?
+0119	How?
+0120	+...
+0121	Anyway, I sent him\npacking.
+0121	He's gone to the\nwaterworks.
+0122	The Styx?
+B
+0123	
+0124	
+B
+0125	The Styx is that way,\ndudes.
+0125	Shouldn't take you too\nlong to get there.
+0126	Thanks, man.
+0126	I'll shock Iskur good for\nyou.
+0127	+...
+0128	Oh yeah,\nthey're doomed.
+0129	I am so glad to be out of\nthat city...
+0129	...it gives me the\nheebie-jeebies!
+0130	With that behind us,
+0130	we can finally make some\nprogress!
+0131	Hmm...
+0132	It should be down there.
+0132	...somewhere.
+0133	All we have to do is find\na safe way...
+0134	DOOOWN!
+0135	AAAAAGH!
+0136	OH NO!
+0136	NO NO NO NO NO!!!
+0137	What are all these pipes\ndoing here?
+0138	+-pok-
+0139	+Geh.
+0140	
+0141	+-BLOOSH-
+0142	Baa!
+0143	
+0144	
+0145	Baa!
+0146	Chrys?
+0148	BAAAAA!!
+0149	Huh?
+0149	Behind me?
+0150	...Iskur?
+S63
+0151	+...
+0152	-huff-\n-huff-
+0153	Iskur...
+0153	You've really bulked up,\nman.
+0154	It's not as easy to beat\nyou as it used to be.
+0155	Oh!
+0155	I see!
+0156	It's a challenge you\nwant...
+0157	...so be it.
+0158	Hmpf!
+0158	Bring it on!
+S631+
+E
+L7
+0159	Gyaaaa!
+0160	-THUD-
+0161	Heh!
+0161	That wasn't so hard.
+0162	GRAAARGH!
+0163	You JERK!
+0163	You'll pay for this!
+0164	a...
+0164	...a talking sheep?
+0165	No!
+0165	Not a sheep, you\nnumbskull!
+0166	+I...
+0167	+...am...
+0168	+...your...
+0169	DOOM!
+S73
+E
+L8
+0170	+-cough-\n-hack-
+0172	+-GULP!-
+0173	Why did you try to kidnap\nChrys?
+0174	It... it's starting to get\ncold on the other side...
+0174	I just wanted to keep\nwarm!
+0175	And everyone knows that\nChrys' wool is the best.
+0175	"Worth its weight in\ngold," they say.
+0176	So I says to myself:
+0176	"Wouldn't she make a nice\ncardigan sweater?"
+0177	All that trouble, the\ntrickery...
+0177	...the masses of stolen\nsheep...
+0177	...just so you can\nhave...
+0178	A SWEATER?!
+0179	A NICE sweater.
+0180	-FZAKK-
+0181	Silly demon.
+0181	Ok, Chrys.\nLet's get you out of there.
+0182	Thank goodness you're ok!
+0182	Baa!
+0183	...
+0184	Oh yeah!\nIskur!
+0185	+-unnh-
+0186	+-groan-
+0187	Now that's the skinny guy\nI remember...
+0188	Huh?
+0188	Where am I?
+0189	Zeus?\nChrys?
+0189	What's going on?
+0190	Just a slight case of\ndemonic possession, chum.
+0190	Nothing to worry about.
+0191	At any rate, there're\nstill some sheep on the loose.
+0192	What do you say, chum...
+0192	...how about a little\npost-traumatic herding?
+0193	Well...
+0193	It's not like I have\nanything better to do...
+0194	+Baa!
+0195	Cool Herders
+Q
+``

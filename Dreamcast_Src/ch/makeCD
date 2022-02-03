@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Special version for COOL HERDERS CD!!
+
+if [ "$1" = "" ]; then
+  echo "Pass the name of the folder you wish to create a Dreamcast CD of."
+  echo "If there is an IP.BIN there, it will be copied to this folder."
+  exit
+fi
+
+if test -d $1; then
+  cdrecord dev=0,3,0 -speed=8 -pad -multi -audio music/AudioTracks/*.wav
+  mkisofs -C `cdrecord dev=0,3,0 -msinfo` -l -otmp.iso $1/
+
+  if test -f $1/IP.BIN; then
+    cp $1/IP.BIN .
+    echo "Copied IP.BIN"
+  fi
+
+  ( cat IP.BIN ; dd if=tmp.iso bs=2048 skip=16 ) > data.raw
+  cdrecord dev=0,3,0 -speed=8 -xa1 data.raw
+else
+  echo "The passed argument must be a directory."
+  exit
+fi
+

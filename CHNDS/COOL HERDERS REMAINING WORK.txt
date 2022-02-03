@@ -1,0 +1,18 @@
+-------
+NETWORK
+-------
+-Networking may not be 100% stable - in particular network errors may pop up twice in a row in some cases
+-Network play is slow
+
+-speed may be helped -- we sync twice during the frame now... maybe a third one?
+The problem before was syncing during the player process loop, so different players could see different inputs.
+
+------------
+FINALIZATION
+------------
+
+-write a simple manual
+	
+-fix all warnings in release builds
+-disable Power Button when gDontCheckLid is set true
+

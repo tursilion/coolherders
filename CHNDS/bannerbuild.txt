@@ -1,0 +1,11 @@
+To rebuild the banner:
+
+Edit the text strings in coolherders.bsf
+This is a UTF-16 file, so use something like TextPad.  Make sure that BOM (Byte Order Marker) is ON, 
+and file is little endian
+
+Place a 32x32x16 color graphic in coolherders.bmp
+
+Assuming that the NitroSDK tools are in your path, type:
+ntexconv coolherders.bmp -no -bg -bgb -bgnc
+makebanner coolherders.bsf

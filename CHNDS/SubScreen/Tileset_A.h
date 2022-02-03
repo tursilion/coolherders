@@ -1,0 +1,16 @@
+extern const unsigned short Tileset_A0_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A0_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A1_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A1_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A2_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A2_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A3_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A3_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A4_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A4_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A5_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A5_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A6_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A6_Bitmap[1024] __attribute__ ((aligned (4)));
+extern const unsigned short Tileset_A7_Palette[16] __attribute__ ((aligned (4)));
+extern const unsigned char Tileset_A7_Bitmap[1024] __attribute__ ((aligned (4)));

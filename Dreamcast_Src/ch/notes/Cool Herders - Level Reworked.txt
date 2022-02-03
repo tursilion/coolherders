@@ -1,0 +1,50 @@
+OOOOOOOOOOOOOOOOOOOOO
+OOOOOOOOOOOOOOOOOOOOO
+OQKKKKKKKKKKKKKKKKKPO
+OMjj9999jjjjj9999jjLO
+OMjGAA1AaAaAAA1AAFjLO
+OM9CeeeEeeeeeEeeeB9LO
+OM9CeEEEeEEEeEeEeB9LO
+OM93eeeeeEeeeeeEe29LO
+OMJCeEEEeEeEeEEEeBJLO
+OM93eEeeeeeEeeeee29LO
+OM9CeEeEeEEEeEEEeB9LO
+OM9CeeeEeeeeeEeeeB9LO
+OMjIDD4DDDdDdD4DDHjLO
+OMjj9999jjjjj9999jjLO
+OSNNNNNNNNNNNNNNNNNRO
+OOOOOOOOOOOOOOOOOOOOO
+
+WHERE
+A=01-01
+B=01-02
+C=01-03
+D=01-04
+E=01-05
+F=02-01
+G=02-02
+H=02-03
+I=02-04
+J=02-05
+K=03-01
+L=03-02
+M=03-03
+N=03-04
+O=03-05
+P=04-01
+Q=04-02
+R=04-03
+S=04-04
+
+CAPS are TILESET1, miniscule are tileset2
+
+NOTE: Tileset 2 is two sets of TILESET1's first 10 tiles with a different barrier on each of these ten tiles.
+
+The permanent barriers coincide precisely with Tileset 1. A=a for the underlying tile. The breakable barriers are 10 higher, of course.
+A=k B=l C=m D=n E=o
+F=p G=q H=r I=s J=t
+
+The majortity of these aren't used at all, but we have them just in case..  :)
+
+Have fun, Tursi!
+I'll talk to ya after work!

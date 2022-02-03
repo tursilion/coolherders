@@ -1,0 +1,13 @@
+ playfield:
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ X..............................X
+ X..XXXXX..XX..XXXX..XX..XXXXX..X
+ X..X......XX........XX......X..X
+ X..X..XX..XX..XXXX..XX..XX..X..X
+ X.........XX........XX.........X
+ X..X..XX..XX..XXXX..XX..XX..X..X
+ X..X......XX........XX......X..X
+ X..XXXXX..XX..XXXX..XX..XXXXX..X
+ X..............................X
+ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+end

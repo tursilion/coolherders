@@ -1,0 +1,67 @@
+Everyone and what they did! :)
+------------------------------
+
+Not everyone who was involved with the game at all got a full credit in the end sequence. This text file can give you some insight in just how much work there really was and who's to blame for what! :)
+
+Brendan "Binky" Weise
+-Original game idea, much design, artwork for Zeus, classic herders and blue NH-5, all level artwork and layout except some destructibles, Disco and Waterworks story mode art, plus concept sketches to help some of the others out. HarmlessLion logo, fonts, win splashes, plus the 'ready', 'go' and 'paused'. Main 'stencil' style fonts. The sheep, boots, and lightning bolts. Binky icon on end credits, and musical icon for Tenzu on the end credits. Sheep and title graphics used in end credits. Field background used for various menus. Laid out the basics for the main story mode.
+
+Mike "Tursi" Brent
+-Design with Binky, all programming except end credits and some forward ports, lots of artwork touch-up, project management, production and direction, color/textures/layout of the signs on player select screen, and the pity goat. Two pieces of story art in New Zealand and one in the Haunted House (the last two in New Zealand and the wolf-in-a-pumpkin in the Haunted level), created from assets provided by Erin. Background image on many menus based on original image by Binky. Loading banner, 'how to play' sprite work (with assets created by Binky), menu design. Bang and click sound effects. Adapted game over riff from older tune by Sean Connell (re-recorded by Marjan). Adapted story mode drumbeat from music by Doug Ritchie. Also managed the project and the crew, provided a contact point to GOAT and performed negotiations, and arranged the dev gifts. ;) Wrote the main story mode based on Binky's layout. CD image layout and mastering.
+
+Doug "Tenzu" Ritchie
+-All in-game music except the three tunes in Liandrin's bonus gallery and the short game-over riff.
+
+Foxx Crump
+-All world select artwork. Foxx icon on the end credits.
+
+Raye Daniels
+-All faces for player select screen. Gold sheep. Raye icon on the end credits.
+
+Maurizio "Marrisoft" Terzo
+-All player sprites except for classic herder, Zeus, and blue NH-5. (But colored other NH-5 variants and re-shaded the classis herder). Marrisoft logo on the end credits.
+
+"Babs" Fiala
+-Tursi logo on the end credits.
+
+Dan "Bard" Potter
+-Starting and maintaining KOS in the first place. Helping keep me interested in DC coding early on. Inspiring the creation of Cool Herders at all by creating DC Tonic. Porting the early demo code to a more reasonable version of KOS and giving that code to me. Beta testing on the RCs.
+
+Flossie - the Prettiest Sheep in the World
+-All baas and bleats. Flossie moved on to greener pastures during the development of this game. Rest well, Flossie.
+
+Jeff "Yak" Minter
+-Provided raw samples of Flossie to work from. :)
+
+Sean "Liandrin" Connell
+-Wrote three tunes for the old demo version (available in the music gallery). Only two were used in DC Tonic, and even there they were converted to S3M from MIDI.
+
+Negroponte J 'Paul' Rabit
+-Design and programming of end credits sequence, as well as the font used there. Rabit icon on the end credits.
+
+Erin "Silvyr" Christie
+-All story mode panels prior to the Disco except the last two in New Zealand and the wolf-in-a-pumpkin in the Haunted level (but her art was used to create them). Erin icon on the end credits. 'Evil Morgana the Fluffy' in the art gallery.
+
+Taylor Hunt
+-Balloon and halo destructibles (touched up by Tursi and Binky)
+
+Adam James Howard
+-Gift boxes (touched up by Binky), Gumballs (touched up by Tursi), disco balls (only in art gallery in the end).
+
+"Marjan"
+-Recomposed the game over jingle into MIDI from a staticy sample provided by Tursi
+
+"Kevv"
+-Helpful suggestions and comments for the computer AI and player movement.
+
+Carson "Netolu" Buckley
+-Came in a bit late, but did his usual beta test magic, even working remotely and without internet!
+
+Dan "GOAT Store" Loosen
+-Caused the project to be brought back to life by writing and offering to publish it!! Beta testing on the RCs. Wrote long and detailed emails with thoughtful suggestions for improvement. Did all the hard business end stuff! :) Wrote the secondary 'hard' story mode story.
+
+Gary "GOAT Store" Heil
+-Massive behind the scenes work keeping GOAT Publishing moving forward. CD case artwork layout.
+
+Harold Lohner of Harold's Fonts (http://members.aol.com/fontner/)
+-Created and released as freeware the Aardvark Cafe font used on some of the screens.

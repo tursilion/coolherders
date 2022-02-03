@@ -1,0 +1,321 @@
+/****************************************/
+/* Cool Herders                         */
+/* A demented muse by Brendan Wiese     */
+/* http://starbow.org                   */
+/* Programmed by Mike Brent             */
+/* http://harmlesslion.com              */
+/* Copyright 2000-2005 Brendan Wiese &  */
+/* Mike Brent.                          */
+/* pathfind.c                           */
+/****************************************/
+
+// Known problems, if I have time:
+// - Why does the destination sometimes end up as 1,1? (Because we didn't choose a target?)
+// - Player sometimes falls off his path
+// - Player sometimes doesn't have a path but runs anyway
+
+#include <stdio.h>
+#ifdef WIN32
+#include "kosemulation.h"
+#else
+#include <kos.h>
+#include <arch/arch.h>
+#endif
+#include "sprite.h"
+#include "cool.h"
+#include "levels.h"
+#include "pathfind.h"
+
+// from cool.h
+void debug(char *str, ...);
+
+// 32 paths, 50 steps each (3.2k)
+static char PathFound[32][50][2];
+static char pathwalk[16][21];		// y,x
+int nPaths, nRange;
+int startx,starty,endx,endy;
+
+int isFlat(int x, int y);
+void DoPaths();
+
+void FindPath(int debugidx, char *PathList, int sx, int sy, int dx, int dy) {
+	int idx, idx2, n;
+	int x,y;
+
+	x=dx;
+	y=dy;
+    sx=((sx-PLAYFIELDXOFF)+GRIDSIZE/2)/GRIDSIZE;
+	sy=((sy-PLAYFIELDYOFF)+GRIDSIZE/2)/GRIDSIZE;
+	dx=((dx-PLAYFIELDXOFF)+GRIDSIZE/2)/GRIDSIZE;
+	dy=((dy-PLAYFIELDYOFF)+GRIDSIZE/2)/GRIDSIZE;
+	
+	if ((dx>18)||(dx<2)||(dy>13)||(dy<3)) {
+		debug("* Bad parameters to FindPath: %d,%d - %d,%d (%d,%d), herder %d\n", sx, sy, dx, dy, x, y, debugidx);
+		PathList[0]=-1;
+		PathList[1]=-1;
+		PathList[2]=-1;
+		PathList[3]=-1;
+		return;
+	}
+
+//	debug("Pathfind from %d,%d to %d,%d\n", sx, sy, dx, dy);
+
+	if (!isFlat(dx,dy)) {
+		// This is especially possible on the haunted level! Find a nearby flat spot to move to
+		if (isFlat(dx+1,dy)) {
+			dx+=1;
+		} else if (isFlat(dx-1,dy)) {
+			dx-=1;
+		} else if (isFlat(dx,dy+1)) {
+			dy+=1;
+		} else if (isFlat(dx,dy-1)) {
+			dy-=1;
+		} else {
+			debug("* Can't find flat region near %d,%d, herder %d\n", dx, dy, debugidx);
+			PathList[0]=-1;
+			PathList[1]=-1;
+			PathList[2]=-1;
+			PathList[3]=-1;
+			return;
+		}
+	}
+
+	if ((sx==dx)&&(sy==dy)) {
+		// No comment - there's just no move required
+		PathList[0]=-1;
+		PathList[1]=-1;
+		PathList[2]=-1;
+		PathList[3]=-1;
+		return;
+	}
+
+	startx=sx;
+	starty=sy;
+	endx=dx;
+	endy=dy;
+
+	nPaths=1;
+	nRange=0;
+	memset(PathFound, 0, sizeof(PathFound));
+	PathFound[0][0][0]=startx;
+	PathFound[0][0][1]=starty;
+	memset(pathwalk, 0, sizeof(pathwalk));
+	pathwalk[starty][startx]=1;
+
+	while (-1 != PathFound[0][0][0]) {
+		DoPaths();
+	}
+
+	// got it
+	n=PathFound[0][0][1];
+	if (-1 == n) {
+		debug("* Path not found: %d,%d - %d,%d, herder %d\n", sx, sy, dx, dy, debugidx);
+		PathList[0]=-1;
+		PathList[1]=-1;
+		PathList[2]=-1;
+		PathList[3]=-1;
+		return;
+	}
+
+#ifdef USE_PC
+	if (n<0) {
+		debug("* Pathfind found illegal path number %d, herder %d\n", n, debugidx);
+	}
+#endif
+
+	idx2=0;
+	x=-1;
+	y=-1;
+	for (idx=1; idx<=nRange; idx++) {
+		if ((x != PathFound[n][idx][0]) || (y != PathFound[n][idx][1])) {
+			x=PathFound[n][idx][0];
+			y=PathFound[n][idx][1];
+#ifdef PATHFIND_DEBUG
+			debug("Herder %d PATH: %2d - (%4d,%4d)\n", debugidx, idx2/2, x, y);
+#endif
+			PathList[idx2]=x;
+			PathList[idx2+1]=y;
+			idx2+=2;
+		}
+	}
+	PathList[idx2]=-1;
+	PathList[idx2+1]=-1;
+}
+
+int isFlat(int x, int y)
+{
+	if ((LevelData[y][x].nPage == 3) || (LevelData[y][x].isPassable)) {
+		return 1;
+	}
+	return 0;
+}
+
+void DoPaths()
+{
+	int nTmpPaths=nPaths;
+	int idx, idx2;
+
+	// First check the existing path
+	for (idx=0; idx<nTmpPaths; idx++) {
+		int x,y,z;
+
+		if (0 == PathFound[idx][0][0]) {
+			// dead path
+			continue;
+		}
+
+		x=PathFound[idx][nRange][0];
+		y=PathFound[idx][nRange][1];
+		z=0;
+
+		// next path up
+		if ((nRange==0)||((nRange>0)&&(y-1!=PathFound[idx][nRange-1][1]))) {
+			// only 1 var can change per step
+			if (isFlat(x,y-1)) {
+				// check for negative push tile
+				if ((LevelData[y][x].nPush!=3)||(nRange&1)) {
+					if (0==pathwalk[y-1][x]) {
+						// we can do this
+						pathwalk[y-1][x]=1;
+						PathFound[idx][nRange+1][0]=x;
+						PathFound[idx][nRange+1][1]=y-1;
+						if ((y-1==endy)&&(x==endx)) {
+							PathFound[0][0][0]=-1;
+							PathFound[0][0][1]=idx;
+							break;
+						}
+						z=1;
+					}
+				}
+			}
+		}
+
+		// and right
+		if ((nRange==0)||((nRange>0)&&(x+1!=PathFound[idx][nRange-1][0]))) {
+			// only 1 var can change per step
+			if (isFlat(x+1,y)) {
+				// check for negative push tile
+				if ((LevelData[y][x].nPush!=4)||(nRange&1)) {
+					if (0==pathwalk[y][x+1]) {
+						// we can do this
+						if (!z) {
+							pathwalk[y][x+1]=1;
+							PathFound[idx][nRange+1][0]=x+1;
+							PathFound[idx][nRange+1][1]=y;
+							if ((y==endy)&&(x+1==endx)) {
+								PathFound[0][0][0]=-1;
+								PathFound[0][0][1]=idx;
+								break;
+							}
+							z=1;
+						} else {
+							for (idx2=0; idx2<=nRange; idx2++) {
+								PathFound[nPaths][idx2][0]=PathFound[idx][idx2][0];
+								PathFound[nPaths][idx2][1]=PathFound[idx][idx2][1];
+							}
+							pathwalk[y][x+1]=1;
+							PathFound[nPaths][nRange+1][0]=x+1;
+							PathFound[nPaths][nRange+1][1]=y;
+							if ((y==endy)&&(x+1==endx)) {
+								PathFound[0][0][0]=-1;
+								PathFound[0][0][1]=nPaths;
+							}
+							nPaths++;
+							z=1;
+						}
+					} 
+				}
+			}
+		}
+
+		// and left
+		if ((nRange==0)||((nRange>0)&&(x-1!=PathFound[idx][nRange-1][0]))) {
+			// only 1 var can change per step
+			if (isFlat(x-1,y)) {
+				// check for negative push tile
+				if ((LevelData[y][x].nPush!=2)||(nRange&1)) {
+					if (0==pathwalk[y][x-1]) {
+						// we can do this
+						if (!z) {
+							pathwalk[y][x-1]=1;
+							PathFound[idx][nRange+1][0]=x-1;
+							PathFound[idx][nRange+1][1]=y;
+							if ((y==endy)&&(x-1==endx)) {
+								PathFound[0][0][0]=-1;
+								PathFound[0][0][1]=idx;
+								break;
+							}
+							z=1;
+						} else {
+							for (idx2=0; idx2<=nRange; idx2++) {
+								PathFound[nPaths][idx2][0]=PathFound[idx][idx2][0];
+								PathFound[nPaths][idx2][1]=PathFound[idx][idx2][1];
+							}
+							pathwalk[y][x-1]=1;
+							PathFound[nPaths][nRange+1][0]=x-1;
+							PathFound[nPaths][nRange+1][1]=y;
+							if ((y==endy)&&(x-1==endx)) {
+								PathFound[0][0][0]=-1;
+								PathFound[0][0][1]=nPaths;
+							}
+							nPaths++;
+							z=1;
+						}
+					}
+				}
+			}
+		}
+
+		// and down
+		if ((nRange==0)||((nRange>0)&&(y+1!=PathFound[idx][nRange-1][1]))) {
+			// only 1 var can change per step
+			if (isFlat(x,y+1)) {
+				// check for negative push tile
+				if ((LevelData[y][x].nPush!=1)||(nRange&1)) {
+					if (0==pathwalk[y+1][x]) {
+						// we can do this
+						if (!z) {
+							pathwalk[y+1][x]=1;
+							PathFound[idx][nRange+1][0]=x;
+							PathFound[idx][nRange+1][1]=y+1;
+							if ((y+1==endy)&&(x==endx)) {
+								PathFound[0][0][0]=-1;
+								PathFound[0][0][1]=idx;
+								break;
+							}
+							z=1;
+						} else {
+							for (idx2=0; idx2<=nRange; idx2++) {
+								PathFound[nPaths][idx2][0]=PathFound[idx][idx2][0];
+								PathFound[nPaths][idx2][1]=PathFound[idx][idx2][1];
+							}
+							pathwalk[y+1][x]=1;
+							PathFound[nPaths][nRange+1][0]=x;
+							PathFound[nPaths][nRange+1][1]=y+1;
+							if ((y+1==endy)&&(x==endx)) {
+								PathFound[0][0][0]=-1;
+								PathFound[0][0][1]=nPaths;
+							}
+							nPaths++;
+							z=1;
+						}
+					}
+				}
+			}
+		}
+
+		if (0 == PathFound[idx][nRange+1][0]) {
+			// dead end - this stream is dead
+			PathFound[idx][0][0]=0;
+		}
+	}
+
+
+	nRange++;
+	if (nRange>49) {
+		debug("*** PathFind OVERFLOW ***\n");
+		PathFound[0][0][0]=-1;
+		PathFound[0][0][1]=-1;
+	}
+}
+

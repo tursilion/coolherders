@@ -1,0 +1,49 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "CoolHerdersMix"=.\CoolHerdersMix\CoolHerdersMix.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/CoolHerders", WQAAAAAA
+    .
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "libmenu"=\Dreamcast\libmenu\libmenu.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/libmenu", OWAAAAAA
+    \dreamcast\libmenu
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

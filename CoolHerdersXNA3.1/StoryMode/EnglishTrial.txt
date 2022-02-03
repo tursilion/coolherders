@@ -1,0 +1,49 @@
+﻿// Codes - start with `, anything else is text
+// Lx - start point for level x
+// B - fade to black
+// Cxyy - perform challenge stage x with criteria yy
+// Sxyz - play normal level x, out of y rounds, on stage z, for sheep (z is optional)
+// Pxyz - play normal level x, out of y rounds, on stage z, for points (z is optional)
+// Pxyz+ - same as Pxyz, but adds Iskur's clones
+// E - end of level
+// Q - end game
+// ` - end of data
+// All text starts with four digits that indicate the slide to be displayed, ignore whitespace
+// after the digits.
+
+L1
+0001	In New Zealand...
+0003	...it was a typical day...
+0005	But,
+0006	things would become far less typical,
+0007	for one boy in particular.
+0010	"Dear Zeus:\nI've taken most of the sheep from your pathetic little village."
+0010	"If you want them returned, seek them out and them take them back yourself."
+0010	"Your nemesis,\nIskur"
+S111
+E
+L2
+0015	Do you really think Iskur was serious, Chrys?
+0015	Could he sheepnap a whole herd?
+0024	Wait a minute...
+0025	The Candy Shoppe!
+0026	Maybe they know something about the sheepnapping.
+C225
+P211
+E
+L3
+0045	He was heading towards old man Hades' place.
+0046	O-Old Man Hades?!
+0046	That guy's name is synonymous with death!
+C325
+S311
+E
+L4
+0192	...how about a buying the game and checking the rest out?
+0193	Well...
+0193	It's not like I have anything better to do...
+0194	Baa!
+0195	Cool Herders
+Q
+``
+

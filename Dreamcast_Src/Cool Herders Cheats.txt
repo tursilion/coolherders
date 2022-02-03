@@ -1,0 +1,150 @@
+/Just an archive of undocumented behaviour ;)
+--------------------------------------------
+
+Cheats that unlock or change behaviour do not trigger autosaves. However, you can manually save (or trigger an autosave normally) to save the changes to VMU.
+
+Anywhere:
+*Hold A+B+X+Y+Start to return to title page. If on Title Page, exits to main menu. You must release at least X and Y on the title page for at least 1/2 second before pressing it again to quit the game. (Tursi 1/feb/06)
+*There is a JPG photo of Tursi's (messy) dev station in the Bonus folder on the disc (Tursi 21 Mar 06)
+*Not deliberate, but too hard to work around - start a game (story mode or multiplayer), then soft-reset back to the menu. This will still increment the games played counter towards bonuses. (Tursi 21 Mar 06)
+
+Main Menu:
+*Hold left trigger while moving down to select 'demo' - which just runs a computer-only game like in the normal demo mode (Tursi 21 Mar 06)
+
+Player Select:
+*Hold either trigger to select alternate character on signpost - characters must be unlocked first so this may not be TOO secret. ;) (Tursi 4/Mar/06)
+
+Level Select:
+*Tap up 7 times from main selection to get Heaven (Tursi 1/Feb/06)
+*Tap down 6 times from main selection to get Hell (Tursi 21 Mar 06)
+
+Single Player:
+*Hold either trigger during story mode to get alternate AYB text (New Zealand only)
+*Have a second player hold triggers on non-player controls when the player presses A or Start at end of story mode text. That controller will then control the computer player (must do every level). (Tursi 17/Feb/06)
+*Press Start instead of A to skip story-mode text (Tursi 4/Mar/06)
+
+Bonus Screen:
+*Hold right trigger to speed up the bonus counting (Tursi 4/Mar/06)
+*Hold left trigger to slow down the bonus counting (Tursi 4/Mar/06)
+
+Image Gallery:
+*Press either trigger for a random image (Tursi 4/Mar/06)
+
+Music Gallery:
+*Press either trigger for a random tune (Tursi 4/Mar/06)
+
+End Credits:
+*Hold right trigger to speed up the scroll and icons (Tursi 4/Mar/06)
+*Hold left trigger to slow down the scroll and stop icons from changing (Tursi 4/Mar/06)
+*Hold both triggers for rapid scrolling and icon changing (Tursi 4/Mar/06)
+*Press Y to stop background movement (this is displayed onscreen) (Tursi 4/Mar/06)
+*Press A to re-start background movement (this is displayed onscreen) (Tursi 4/Mar/06)
+*Press X+DPAD Right (not analog) to speed up background movement (Tursi 4/Mar/06)
+*Press X+DPAD Left (not analog) to slow down background movement (Tursi 4/Mar/06)
+
+Options Menu:
+*Hold left trigger on highest controller port to see build date (Tursi 4/Mar/06)
+*Hold right trigger on highest controller port to see number of games played (Tursi 4/Mar/06)
+
+InGame:
+*Leave paused several minutes for a 'screensaver' mode where the screen darkens and the score boxes bounce around (Tursi 4/Mar/06)
+
+Paused:
+*Triggers control brightness in night mode (if you use this and then save, even due to another autosave, it will remember the new brightness. However, changing it won't in itself trigger an autosave.)  (Tursi 4/Mar/06)
+
+Continue Screen:
+*UUDDLRLR to add a continue (Tursi - 13/01/06)
+
+Cheat codes (enter at title screen, or various other places, but 'Start' must be at title screen):
+*AAAAAAAAAA - if you make a mistake, tapping A 10 times will clear it
+*ARRAY Start - All worlds (normal mode, again for hard mode. Hard mode not needed for multiplayer.)
+*BLURB Start - All players
+*LUXURY Start - Enable 'disable powerups' menu option
+*AYBAYB Start - Enable alternate text in story mode (not saved)
+*BALLAD Start - Unlock music gallery
+*RADAR Start - Unlock ghost sheep control
+*BULLY Start - Unlock image gallery
+*RURALLY Start - Unlock night mode
+*DURABLY Start - Unlock end credits
+*BABY Start - Always win Story Mode
+*BABYBABY Start - Never fail challenges
+*YABAX Start - Unlock Omake mode
+*YABBA Start - Only play story text (no game, just view story)
+
+If you enter a code for a feature that's already unlocked, the screen will just flash to black and return to menu.
+
+Unlocking items
+---------------
+*CandyLand - Beat Candyland in story mode
+*Haunted Dining Room - Beat Haunted world in story mode
+*Toy Factory - Beat Toy Factory in story mode
+*Disco - Beat Disco in story mode
+*Waterworks - Beat Waterworks (first two matches) in story mode
+
+*Hades Wolf (alt for NH-5) - find Hades in under 10 seconds
+*Thalia (alt for Zeus) - resuce 20 sheep from the conveyor belts
+*God of Dance (alt for backup dancer) - evade dancers for at least 10 seconds
+*Iskur (alt for basic herder) - beat first Waterworks stage in Story Mode (must win first round)
+*Angel (alt for Candi) - select Heaven on stage select screen (Tursi 21 Mar 06)
+*Devil (alt for Zombie) - select Hell on stage select screen (Tursi 21 Mar 06)
+
+*Disable Powerup mode - play 10 games
+*Music Gallery - play 20 games
+*Enable/disable Ghost sheep - play 30 games
+*Image gallery - play 40 games
+*Night mode - play 50 games
+
+*Hard Mode - beat Normal story mode
+*End Credits - beat Normal Story mode again (continue okay)
+*Omake mode - beat Hard Story mode (beat Omake to unlock EVERYTHING, if anything isn't already)
+
+Tactics
+-------
+-Be aggressive. very aggressive.
+-Avoid head-on firefights. Snipe opponents from the side or back and circle around to get their sheep.
+-In points based matches, fire rapidly and grab all the crates and powerups you can
+-Stretch out points and sheep based matches to improve your odds by sniping the other herders from time to time and keeping a pool of wild sheep
+-In the Disco challenge - sit still until the dancers approach your hiding place. Make them start to destroy the disco balls then sneak out the back way and run for it!
+
+Bonuses (none apply if never moved)
+-----------------------------------
+Wild sheep			 -50 pts for each uncaptured sheep when time runs out
+Time Bonus			  50 points per second left
+Sheep bonus			 100 points per sheep captured
+Last Second			1000 pts if stage cleared with 1 second left
+Master Herder		3000 pts if pacifist and won -OR-
+No contest			2000 pts for being the leader from start to finish -OR-
+Most Sheep			1000 pts for having the most sheep (only if more than 1 player)
+Feudin'				  50 pts each two herders only attacked each other
+Punching bag		 100 pts if got caught between two players zapping rapidly
+Materialist			 100 pts for collecting the most powerups (if powerups enabled)
+Slowpoke			 100 pts for getting no speedups (if powerups enabled)
+Conservationalist	 100 pts for getting no lightning powerups (if powerups enabled)
+Most masochistic	 500 pts for being zapped the most times
+Statue				 500 pts for standing still more than approx 10 seconds
+Avenger				 500 pts if you zap the person who zapped you within 1 second
+Scavenger Hunt		 800 pts for zapping more than 10 crates
+First Strike		1000 pts for being the first to zap another herder
+Fastest reflexes	1000 pts for shortest average time between losing sheep and regaining them 
+Never look back		1000 pts for never turning around 180 degrees 
+Evasive				1000 pts if never got zapped (if more than 1 player)
+Minimalist			1000 pts for collecting the fewest powerups (if powerups are enabled)
+Track star			1000 pts for getting max speedup (if powerups are enabled)
+Lightning god		1000 pts for getting max lightning powerup (if powerups are enabled)
+Berzerker			 500 pts for continuous rapid-fire zapping
+Back to basics		1500 pts for collecting no powerups (if powerups are enabled)
+Bar-B-Que			1500 pts for zapping sheep more than 50 times
+Pacifist			2000 pts if never attacked player or sheep (only if more than 1 player) 
+Pity Goat			 150 pts if score less than or equal to 1500
+
+Scoring (Tursi 16 Apr 06)
+-------
+Powerups  				50pts each, 
+						100pts if already at maximum
+Zapping Destructibles 	10pts
+Zapping Sheep 			10pts
+Zapping Herders 		10pts
+Collecting Sheep 		10pts on recapture, 
+						50pts for first capture, 
+						100pts if recaptured by anyone immediately after it's invincibility ends after being freed
+

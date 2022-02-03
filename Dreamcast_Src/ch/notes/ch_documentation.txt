@@ -1,0 +1,493 @@
+KOS Discussion re: Cool Herders
+
+AUDIO
+-----
+sound.c
+sound.h
+s3mplay.h
+
+This module will need to be rewritten for another architecture.
+
+This code was basically stolen from Ghetto Pong. ;) It's purpose is interface to
+the S3M/Sound Effect engine which is running on the Dreamcast's sound processor.
+
+Music in Cool Herders is currently S3M, although it's available as MIDI (and
+MP3, but processor speeds being what they are... ;) ) The S3M player used was
+fairly limited, and rather than being modified and recompiled, was simply
+patched to function as desired.
+
+S3Ms and samples are loaded into audio RAM, along with the S3M player itself.
+
+int snd_load(char *fn, int* idx);
+Loads a sound file into audio RAM at address 'idx', and increments 'idx' as
+a crude memory allocation system. :)
+
+void sound_start(int data, int mono);
+This code disables the sound processor, and sets the MONO flag. Then it patches
+the S3M player in memory with the start address of the tune requested, and patches
+the S3M player to not attempt to fix up the S3M's samples. This is because the
+S3M player used was never intended to play more than one tune, more than once. ;)
+Then we wait for the memory access to complete, and enable to sound chip. This
+forces a reset and starts playing the S3M. (Cool Herders does not wait for the
+S3M player to flag that it has begun playing.)
+
+void sound_prepare(int data);
+The S3M player used needs to prepare some samples in some S3Ms by swapping the
+byte ordering of the data. Normally it does this just before playing, but this
+behaviour is not desirable in Cool Herders for several reasons. This function
+first disables the sound processors. It then patches the S3M player with the
+address of the tune in question. Next it enables the sound processor, which
+begins running the program. As it was not patched to skip the fixup stage,
+it procedes to fix up the S3M. When it indicates that it is beginning to play
+the tune, we disable the sound processor and exit.
+
+void sound_effect(int idx);
+This function simply flags through the S3M player's interface the address and size
+of the sample that we wish it to play. (Essentially playing it.)
+
+void sound_init();
+This function simply prepares the sound system. First it loads the S3M player
+into audio RAM. Next it sets the MONO flag, and initializes the audio memory
+'idx' variable. Next it loads and prepares each of the S3M tunes, and then
+finally loads each of the raw samples.
+
+void sound_shutdown();
+This function simply stops the audio processor.
+
+void LoadProgram();
+This function actually loads the S3M player to audio RAM. First it stops the
+sound processor. Then it zeros audio memory, then finally it simply copies
+the binary data into audio memory.
+
+SPRITES
+-------
+Sprite.c
+Sprite.h
+
+The functions in this module will need to be rewritten for another architecture.
+
+Sprite.c expects to find textures in video memory. Each texture is a maximum of
+256x256 pixels.
+
+All sprites are 48x48 pixel objects, however, they are treated as 32x32 pixel
+objects to allow for overlap on the screen. On the Dreamcast, this overlap
+is made automatic by adjusting the Z co-ordinate of the corners of the sprites
+(the top edge of the sprite is nearer the screen than the bottom on all 3D
+sprites - walls, players, etc). However, the same effect could be managed
+without Z coordinates by sorting the sprites before drawing, and drawing
+from top to bottom, left to right order.
+
+KOS draws the screen by first starting a frame. This initializes a list
+internally of objects to be drawn. The 'sort' functions add objects to
+this list, until the final function completes the frame. This instructs
+the video chip to actually draw the frame. Nothing is erased - if
+an object is not in the list it will not be drawn in the next frame.
+Note that because of this behaviour, anywhere this document talks about
+an object being "drawn", it is actually being sorted into the list. It is
+not actually drawn until the frame end command is sent to the video chip.
+
+Cool Herders on the Dreamcast draws all sprites by drawing a two-triangle 
+polygon strip with an appropriate texture.
+
+KOS sends two lists to the Dreamcast video processor. One list is for
+Opaque objects, and the other for translucent objects. Both lists must
+exist and contain at least one polygon.
+
+A SPRITE object contains basic information for drawing the sprite on
+the screen.
+
+typedef struct SPRITE {
+	uint32	txr_addr;	// address of the texture page in video RAM
+	int	tilenumber;	// which tile on the page (see below)
+	float	x, y, z;	// X, Y and Z coordinates (Z for depth sorting)
+	float	xd, yd;		// movement flags (not used for drawing)
+	float	alpha;		// alpha of the sprite (1.0 is solid, 0.0 is invisible)
+	int	is3D;		// if true, 10.0 is added to Z for the top edge
+	uint32	ta_style;	// either TA_TRANSLUCENT or TA_OPAQUE
+} SPRITE;
+
+Each page (256x256) has 25 tiles of 48x48 pixels. They are arranged in columns, like
+so: 
+
+0 5 10 15 20
+1 6 11 16 21
+2 7 12 17 22
+3 8 13 18 23
+4 9 14 19 24
+
+There are wasted pixels on the bottom and right of the texture page.
+
+void SortSprite(SPRITE *spr);
+This function adds a sprite as specified in the struct to the draw list. For
+porting it would likely be rewritten completely to function as appropriate for
+the hardware in question. However, it functions as follows: First, it uses the
+tilenumber to calculate the location of the texture within th texture page.
+Texture coordinates are represented as floating point numbers from 0.0 to 1.0.
+Next, a polygon strip header is added to the draw list, followed by the
+four points of the triangle strip (with the final one flagging end of list.)
+
+void SortScaledSprite(SPRITE *spr, float xScale, float yScale)
+This functions much the same as SortSprite, but scales the sprite by
+the factor passed in xScale and yScale. The sprite is still drawn with
+the top left corner at the x and y coordinates (ie: the scaling is not
+centered).
+
+void addPage(uint32 txr, int tx1, int ty1, int tx2, int ty2);
+This function (used for the 'Player x Wins!' graphics) wraps around
+addPage2 to center an arbitrarily sized graphic on the screen (assumed
+here to be 640x480).
+
+void addPage2(uint32 txr, int x, int y, int tx1, int ty1, int tx2, int ty2, int alpha);
+This function takes a texture address, x and y coordinates to draw at, a rectangle
+of coordinates within that page (0-255 each, defined as tx1,ty1-tx2,ty2), and an
+alpha percentage from 0-100. It does the necessary calculations and adds a triangle
+strip with the appropriate texture and size to the draw list.
+
+BITMAP LOADER
+-------------
+bmp.c
+bmp.h
+
+It's unlikely that any version will be finalized still using BMPs as the
+image format. :) But, for now...
+
+This code was adapted from the Allegro functions, and stripped down to just
+barely what we need. In addition, it was modified in such a way that endianess
+of the CPU will make a difference - this code expects little endian. In addition,
+it can read ONLY 24-bit uncompressed Windows BMPs.
+
+It converts all loaded images to ARGB1555 format (with RGB 0,0,0 being transparent).
+It adapts the size of the images so that everything is loaded into 256x256 pixel
+texture pages. If an image is larger than 256x256, then the image is mapped by
+columns (ie: a 512x512 image loads like so: 1 3
+                                            2 4  )
+
+If the rest of the graphics code (sprite.c) is rewritten, this can all be adapted
+to match whatever your code does - my texture page code is just to fit the
+Dreamcast hardware.
+
+typedef struct BITMAP
+{
+	unsigned long	nWidth;		 Real Width of the bitmap
+	unsigned long	nHeight;	 Real height of the bitmap
+	unsigned long	adjustedWidth;	 Adjusted (to a multiple of 256) width
+	unsigned long	adjustedHeight;	 Adjusted (to a multiple of 256) height
+	unsigned int	nXBlocks;	 Number of blocks across
+	unsigned int	nYBlocks;	 Number of blocks down
+	unsigned short	data[1];	 Actual data. Note that it's going to
+                                         be much more than 1 byte and so these
+                                         structures do not align nicely. This
+                                         is just here to make getting a pointer easy.
+} BITMAP;
+
+(the other structures are standard BMP format structures and not covered here)
+
+int read_bmfileheader(FILE f, BITMAPFILEHEADER *fileheader);
+Reads the bitmap file header and ensures it's a BMP
+
+int read_win_bminfoheader(FILE f, BITMAPINFOHEADER *infoheader);
+Reads the BMP information header. The fields adjustedWidth, adjustedHeight,
+nXBlocks and nYBlocks are, of course, used in the texture page layout code
+and are not part of the BMP format. Also verifies the image is 24 bit and
+is not compressed.
+
+void read_24bit_line(int length, FILE f, BITMAP *bmp, int line);
+Reads one 24 bit line of the BMP file, converts the pixels into the
+proper ARGB555 format, and stores it in the correct location in the
+correct block.
+
+void read_image(FILE f, BITMAP *bmp, BITMAPINFOHEADER *infoheader);
+Wrapper function for read_24bit_line that loads each line in the image.
+
+BITMAP *load_bmp(char *filename);
+Main function, loads the image 'filename' and returns a pointer to a BITMAP
+structure.
+
+VMU
+---
+
+Various VMU and INC files
+
+These are just monochrome bitmap images used for the Dreamcast Visual Memory Units.
+They won't be covered and their code can be removed in ports.
+
+FONTS
+-----
+font.c
+font.h
+
+This code may need some adaption for other platforms, but not much.
+
+There are two fonts used in Cool Herders, one large and one small. Each resides
+in a single 256x256 texture page and uses hard constants to simplify the code.
+The fonts are fixed size.
+
+fontstr[] defines the characters in each font page, and the order in which they
+appear.
+
+LGX and LGY define the size of each character in the large font.
+SMX and SMY define the size of each character in the small font.
+
+CursorX and CursorY are used by the font routines to know where to draw.
+
+void DrawFont(int large, int x, int y, int alpha, char *str);
+This draws a string at x,y, using the large font if 'large' is true,
+and the small one otherwise. Alpha is an integer from 0 to 100 (%).
+If x or y is -1, the current cursor position for that coordinate
+is used. The cursor coordiates are updated after the string is drawn.
+
+void CenterDrawFont(int large, int y, int alpha, char *str);
+This is a wrapper for DrawFont() that calculates the X coordinate so that
+the string will appear centered on the screen. (The screen is assumed to
+be 640 pixels wide.)
+
+RANDOM NUMBERS
+--------------
+rand.c
+rand.h
+
+No modification should be required to port to a 32-bit architecture.
+
+This uses a clever and fast routing presented by Albert Veli on the Dreamcast
+mailing list for pseudo-random numbers that do not repeat over a large period.
+As implemented, every number between 1 and 2^32 (inclusive) will be generated
+before the sequence repeats, which is adequate.
+
+void srand(unsigned long newseed);
+Sets the seed value to a new number. This number can not be 0, so 0 is checked
+for and replaced with 1.
+
+int rand();
+Returns a semi-random number between 1 and 2^32 (inclusive). Note that 0
+will never be returned.
+
+STARTUP
+-------
+disclaimer.c
+
+This module is likely to change on another architecture.
+
+This code is derived from the Kallistios disclaimer screen. It simply displays
+a 'now loading' and copyright message while loading up the graphics and sound
+files.
+
+static void disc_texture();
+This uses the BIOS font in the Dreamcast to draw the message onto a memory
+texture, which will be rendered using polygons while loading. This texture
+is thrown away and it's memory re-used for levels.
+
+static void disc_display(float fade);
+This function sorts the memory texture (text) into the display list with the
+current 'fade' value as an alpha, as well as actual color. ;)
+
+static void disc_blank();
+This function sorts a blank translucent polygon to prevent an empty list.
+
+void do_screen();
+This function calls the texture setup function, fades it in, calls the load data
+function, fades the disclaimer out, and then reassigns the memory used by the
+texture to the level texture buffers.
+
+uint32 pic_load(char *fn);
+Wrapper function for load_bmp that transfers the loaded BITMAP into video memory 
+and frees the CPU RAM used to load it.
+
+void load_data();
+This function loads all the data files, and calls the sound initialization function.
+
+LEVEL DATA
+----------
+levels.c
+levels.h
+
+This module is not likely to change for different architectures.
+
+Currently there's only one level in the code, so this is pretty sparse. Because the
+level is simply a 2D array, many bytes represent a single object in order to 
+portray the background graphics behind it. The comments in levels.c sum it up
+quite nicely.
+
+Will define a better method later when we have real levels
+Screens are 21x16 
+      Where:    Uppercase A-J are 3D unpassable
+                Uppercase K-Y are flat unpassable
+                Lowercase a-y are flat passable
+                        Numbers 0-9 are 3D destructable unpassable
+                        128-227 - animation for 3D destructible unpassable
+                                  (coincide with 0-9 and a-y, 10 for each)
+                        1-10    - lightning powerup
+                        11-20   - speed powerup
+
+COLLISION BUFFER
+----------------
+collide.c
+collide.h
+
+This module may need adjustment for different architectures.
+
+These functions are a bit inefficient, but they provide collision detection with
+pixel accuracy (not pixel perfect!) All objects are 32x32 blocks, and the code only
+indicates whether collision would occur. Because objects all move at different
+speeds, it was difficult to come up with reliable ways to optimize this code.
+
+Players are handled differently than walls in the collision code.
+
+The buffer itself is simply a 640x480 byte array in CPU memory.
+
+void clearbuffer();
+Sets the entire buffer to 0.
+
+void drawbuffer(int x, int y, uint32 type);
+Draws a 32x32 pixel block into the buffer at x,y, of type 'type'. Valid types
+are TYPE_NONE (0), TYPE_WALL (1), and TYPE_PLAY (2). This is the actual number
+written to the array. 640x480 is assumed. (The comment about the 4 pixel offset
+being required is incorrect.)
+
+uint32 checkblock(int x, int y, uint32 type);
+Check a 32x32 pixel block at x,y. If type is 0, the first non-zero pixel found
+aborts the search and returns the value found. Otherwise a match is only found
+if the type requested is located. This function attempts to optimize by checking
+4 bytes at a time.
+
+void showcollidebuf(int x, int y);
+This function is commented out and not in the code. It drew the collision buffer
+as another sprite to verify it was visible. It was slow and is not necessary.
+
+SHEEP
+-----
+sheep.c
+sheep.h
+
+This module may need adjustment for different architectures.
+
+The sheep are handled using the 'HerdStruct' structure to track statistics (see
+below). They move towards a random destination which changes each time the
+sheep realizes that it can not move directly towards that destination. Sheep
+see players as obstacles and will turn around if they hit one as a result.
+
+void initSheep();
+Initializes the sheep[] array and places all the sheep at the center of the
+screen, with 4 seconds of invincibility.
+
+void moveSheep();
+Moves the sheep. It uses their history array to see if they failed to move
+last frame, and choose a new destination if so. This function handles
+animation and calls the SortSprite function to draw the sheep.
+
+EVERYTHING ELSE
+---------------
+cool.c
+cool.h
+
+This module will require adjustment for other architectures.
+
+This structure is used for the players and the sheep.
+
+typedef struct _herder{
+        SPRITE spr;             Sprite for this object
+        int32 destx, desty;     Destination - used for computer play
+        int32 oldx[HISTORY+1];  A circular buffer containing trails, used to
+        int32 oldy[HISTORY+1];   have the sheep follow, and to detect being stuck
+        int32 oldidx;           position in the trail
+        uint32 address;         Controller Address, 0 for none (Dreamcast specific)
+        int32 type;             Controller Type, 0 for computer, -1 for none
+        uint32 vmu;             VMU address, or 0 if none
+        uint32 score;           Score
+        uint32 stuntime;        if Stunned, for how much longer?
+        uint32 animframe;       animation frame counter
+        uint32 maxframes;       number of animation frames
+        uint32 sheep;           How many sheep (herders only)
+        uint32 range;           range on the electric staff 
+                                - for sheep, invincibility countdown
+        uint32 maxrange;        used to charge up the staff
+        uint32 trap;            what trap (disease) does this player have
+        uint32 speed;           how fast do they move?
+        uint32 charge;          charge level (10 units = 1 range) (herders)
+        uint32 pen;             how many sheep are in the pen (herders)
+        uint32 penhp;           how many hp are on the pen (herders)
+} HerdStruct, *pHerdStruct;
+
+int main(int argc, char *argv[]);
+Main entry function. Initializes the interface to the KOS libraries. Calls
+the initialization functions, then scans the hardware for VMUs. Initializes
+several flags, and then displays the title page, waiting for a button press.
+There is some additional code to handle no controllers, and detecting one
+being inserted as KOS lacks the interrupt to tell us. During this time, the
+random number generator is continously seeded. If Start is pressed, we
+call Game() to get things started. If A+B+X+Y are pressed, we exit. This
+keypress would not be in the final release version. Finally after a few
+seconds of waiting, we start a demo mode by setting some flags and calling
+Game(). In the exit case, we shutdown, clean up, close the libraries and
+print some statistics before exitting.
+
+void AddPicture(uint32 txr_addr, float z);
+This function draws a 640x480 image, loaded into 256x256 texture pages.
+It could and should easily be rewritten to use addPage2(), but that
+function didn't exist when this was written. ;) It functions the same
+as six addPage2() calls would, using hard coded coordinates. Assumes
+640x480.
+
+void registerDummy(int typeTA);
+This function registers an invisible polygon of the passed type to
+prevent an empty TA list. (Probably should be in sprite.c).
+
+void DoLogos();
+Draws random logos on all detected VMUs. Not required in non-Dreamcast
+builds.
+
+void ReScanVMUs();
+Scans the four controller ports for controllers, and checks them for VMUs.
+The VMU code is not required in non-Dreamcast builds.
+
+int Game();
+The main game routine. This code returns '1' if the outer loop should exit
+the program (not used in a final release build.) If the function is not
+called in a Demo context, doMenu() is called to run the menu. Next the
+players are initialized, followed by a call to the sheep initialization
+function. There is a brief pause to allow controls to be released, and
+the frame/jiffy information is saved for frame rate stats at the end. Next
+the code loads the texture pages for the level (note that this causes
+the frame rate stats to be wrong, except for very long runs). Finally,
+we start the music and enter the main loop. We tell the video processor
+to begin the frame. No OPAQUE polygons are drawn, so we register a dummy 
+into that list, and then start the TRANSLUCENT list. The next loop draws
+the level background and any powerups, and fill in the collision buffer. 
+The nGameCountdown flag is used to time periods of non-control - Ready, 
+Paused, GO! and Player X Wins. If still on Ready! (or we paused), we 
+draw the appropriate sprites, and check the controller. In the event 
+of a read failure (removed controller?), we rescan the controller bus. 
+Note the texture addresses for the ReadyGoPause page are hard coded.
+Next we add the players into the collision buffer, and then handle moving
+them. Speed, stuntime, and various other factors affect the exact codepath
+through the control routine. A flag is set if lightning is to be fired.
+The computer case functions much the same as for the sheep, except that
+it randomly fires it's lightning. A fair bit of complex code attempts to
+smooth out the motion so that going around corners is a pleasant experience.
+We also check for powerups and apply them if found. Next, we sort the herder's
+sheep into the draw list. Finally, if desired, we handle the lightning,
+including checking for zapping other herders or sheep. It's big, it's complex,
+it's ugly, and it's commented. Enjoy. Next the sheep movement routine is
+called, and we look again to see if we caught any of them. Finally, we check
+for various status messages (Player X Wins, Attach Controller, etc), and
+process them. Now, finally, we tell the video processors to finish the
+frame, which draws it. We check to see if anyone won, check for early
+exit from the Win screen, and finally continue the loop if we didn't
+break out. When done, we store the last jiffy information, clear the demo
+flag, reload the S3M player to clear the patches, and return.
+
+void updateoldpos(pHerdStruct pHerd);
+This function updates the circular buffer by adding the current position
+to the list and incrementing the pointer.
+
+void blankscreen(int x);
+This was an attempted workaround for the Dreamcast and KOS. I don't believe
+it's used now and is not required for ports.
+
+int doMenu();
+Displays and handles a very simple menu that allows the user to toggle
+players between human and computer, and allows disabling music or
+sound effects (or both). It needs to be redone into something nicer.
+
+-----------
+That's all!
+-----------

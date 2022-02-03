@@ -1,0 +1,11 @@
+Cool Herders animation speeds:
+
+SHEEP: Every 4 frames
+HERDER: Every 4 frames
+Background A: 6 frames
+Background A Toy Factory: 10 frames
+Background B: 10 frames
+Background B Disco: 6 frames
+Background C: 15 frames
+
+BUG? Waterworks has two different speeds for A and B (6 and 10), both probably should be 6.

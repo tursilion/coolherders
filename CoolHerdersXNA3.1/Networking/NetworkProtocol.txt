@@ -1,0 +1,90 @@
+﻿Game is divided into two states, Lobby and Playing.
+
+The first byte of all packets is read as a byte.  If the high bit is 0, then then it is for Lobby mode.  If the high bit is 1, then it is for Playing mode.
+Packets received in the wrong mode should be dropped with a Debug message issued.  (in game, this is a delayed packet, which will be normal).
+
+Lobby mode:
+All packets must be sent to the host from clients, and the host to clients.  No peer-peer communication at this stage.
+First byte is packet type 0-127.
+
+Playing mode:
+The game starts 'paused'.  Positional packets for all active players and all 29 sheep must be received before beginning play.
+All positional packets are sent peer-peer, with the in-order flag set.  The host owns all AI players, and all 29 sheep. Positional packet format:
+
+1--- ----		High bit set
+-0-- ----		Positional packet
+--A- ----       Character type (0 = sheep, 1 = player)
+---A AAAA       Character Number
+
+A--- ----		Moving flag (0 = stopped, 1 = moving)
+-AA- ----       Direction of movement (Direction enum)
+---A ----		Column number high bit
+---- AA--       Direction of input (Direction enum)
+---- --AA       Length of zapper in tiles
+
+AAAA ----		Row number of tile last traversed
+---- AAAA		Column number & 0x0F of tile last traversed
+
+- OR - 
+
+1--- ----		High bit set
+-0-- ----		Positional packet
+--0- ----       Character is a sheep
+---A AAAA       Sheep Number
+
+0111 1111		Sheep is following a player
+
+AAAA AAAA		Tag of player that sheep is following
+
+
+
+Worst case calculation:
+Positional packets are sent from the host in groups of 16.  Assuming 29 sheep and 3 AI players (impractically high, but close), this takes two packets to send each full
+update.  Total of 10 updates/sec, means 20 packets/sec.
+
+Positional info size = 3 bytes.
+Positional packet size = 48 bytes
+Packet overhead included = 48 + 51 bytes = 99 bytes
+Full update frame rate = 20 * 99 = 1980 bytes.
+Voice bandwidth included = 1980 + 500 = 2480
+Three consoles listening = 7440 bytes/sec.  Fits within the 8k window by 752 bytes.
+
+This is clearly a worst case, as if 3 AI players were present, we would not be talking to three consoles.  But, this does denote the expected bandwidth, off by a few bytes.
+Although not all players will cross a tile axis at the same moment, the packet overhead of notifying at this exact moment would probably not be worth it.  Thus, updates
+occur a regular 20 frames/sec.
+
+Player speed can be inferred from the number of speed pickups claimed.  Sheep speed can be inferred by watching for a sheep to go from 'following' to 'roaming', and handling
+as appropriate.
+
+Other packets are more important, but rarer.  When a pickup is claimed or a box is destroyed, a request must be sent to the host, and a response received, both of which must
+have the reliable flag set.  The response format is as follows:
+
+1--- ----		High bit set
+-1-- ----		Pickup packet
+--A- ----		Item type altered (0 = box destroyed, 1 = pickup claimed)
+---A AAAA		Item number (boxes must be assigned a unique ID during creation)
+
+AAAA AAAA		Tag of claiming player, included if it is a pickup
+
+Pickup packet size = 2 bytes/item
+Worst case 64 items = 128 bytes
+Packet overhead = 128 + 51 = 179 bytes/sec
+
+Worst case 1 item / network frame = 53 bytes * 20 frames = 1060 bytes/sec --- TOO MUCH!!!
+
+Even if all responses occured during the same frame, we would not overflow the packet buffer.  To ensure that packet overhead does not claim all remaining bandwidth,
+all reliable acknowledgements must be sent 10 frames/sec, if any information is in the queue for this type of response.  Due to the limited number of boxes to destroy and
+the limited number of pickups, this information should disappate relatively quickly.  
+
+The request format is:
+1--- ----		High bit set
+-1-- ----		Pickup Packet
+--AA ----		Item type being claimed (0 = box destroyed, 1 = pickup claimed, 2 = sheep stunned, 3 = sheep claimed)
+---- AAAA		Item number & 0x0F
+
+AAAA ----		Item number & 0xF0 if required
+
+When a box is destroyed, the animation should be played while the request is sent to the server, but the animation should be held at the last frame until the response is
+received.  A pickup should be immediately removed from the screen, but not acted upon until the response is received.  If a sheep is claimed, it should be removed from
+the screen until a positional packet indicates that the sheep is following a player.  A stunned sheep will be handled by simply marking the sheep as 'not moving' in the
+next positional update, however this can be reflected on screen immediately.
