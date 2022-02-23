@@ -128,7 +128,7 @@ BOOL CCoolHerdersAnimTestDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
-	_ISInitialize("{50EB2018-DCE6-4773-B3C2-3C58192F64DA}");
+	_ISInitialize("{imgsource GUID goes here}");
 
 	// Add "About..." menu item to system menu.
 
